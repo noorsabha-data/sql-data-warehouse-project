@@ -69,7 +69,7 @@ Project Architecture
     using a Medallion approach (Bronze, Silver, Gold).
 */
 
-
+-- Navigate to master database
 USE master;
 GO
 
