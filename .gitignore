@@ -7,3 +7,6 @@ __pycache__/
 
 # VS Code
 .vscode/
+
+# Ignore datasets
+datasets/
