@@ -2,22 +2,24 @@
 
 ## 🚀 Overview
 
-This project demonstrates the design and implementation of a modern **data warehouse** using SQL Server. It follows a layered architecture (**Bronze → Silver → Gold**) to transform raw data into a clean, business-ready format for analytics and reporting.
+This project demonstrates the end-to-end design and implementation of a **modern data warehouse** using SQL Server.
 
-The final output is a **star schema** optimized for business intelligence tools such as Power BI and Tableau.
+It transforms raw CRM and ERP data into a **clean, structured, and analytics-ready data model** using a layered architecture (**Bronze → Silver → Gold**).
 
+The final output is a **star schema** optimized for business intelligence tools such as Power BI and Tableau, enabling efficient reporting and data-driven decision-making.
 
 ---
 
 ## 📂 Data Sources
 
-This project uses CRM and ERP datasets as input data for the data warehouse pipeline.
+This project uses CRM and ERP datasets as input for the data warehouse pipeline.
 
-- Source systems:
-  - CRM data (`datasets/source_crm`)
-  - ERP data (`datasets/source_erp`)
+* Source systems:
 
-Due to repository size and best practices, raw CSV files are not included in this repository.
+  * CRM data (`datasets/source_crm`)
+  * ERP data (`datasets/source_erp`)
+
+> ⚠️ Raw CSV files are not included due to repository size and best practices.
 
 ---
 
@@ -25,57 +27,64 @@ Due to repository size and best practices, raw CSV files are not included in thi
 
 ### 🔹 Bronze Layer (Raw Data)
 
-* Stores raw data from CRM and ERP systems
-* Minimal transformations applied
-* Serves as the ingestion layer
+* Stores raw data from source systems
+* Minimal transformation applied
+* Acts as the ingestion layer
 
 ### 🔹 Silver Layer (Cleaned Data)
 
 * Data cleansing and standardization
 * Joins and transformations applied
-* Prepares structured data for analytics
+* Prepares structured data for downstream processing
 
 ### 🔹 Gold Layer (Business Layer)
 
-* Star schema design:
+* Implements a **star schema**:
 
   * Fact table: `fact_sales`
   * Dimension tables: `dim_customers`, `dim_products`
-* Optimized for reporting and analytics
+* Optimized for analytics and reporting
 
 ---
 
 ## ⚙️ ETL Pipeline
 
-The project includes stored procedures to automate data movement:
+Automated using stored procedures:
 
-* **Silver Layer**
+### Silver Layer
 
-  * Data cleaning and transformation
-* **Gold Layer**
+* Cleans and standardizes raw data
+* Resolves inconsistencies across source systems
 
-  * Loads dimension tables
-  * Loads fact table with surrogate keys
-  * Includes logging, error handling, and performance tracking
+### Gold Layer
+
+* Loads dimension tables
+* Maps surrogate keys
+* Loads fact table
+* Includes:
+
+  * Logging
+  * Error handling (`TRY...CATCH`)
+  * Performance tracking
 
 ---
 
 ## 📊 Data Model (Star Schema)
 
-**Fact Table**
+### Fact Table
 
 * `fact_sales`
 
-  * Measures: sales_amount, quantity, price
+  * Measures: `sales_amount`, `quantity`, `price`
 
-**Dimension Tables**
+### Dimension Tables
 
 * `dim_customers`
 * `dim_products`
 
-**Grain**
+### Grain
 
-* One row per `(order_number, product)`
+* One row per `(order_number, product_key)`
 
 ---
 
@@ -85,10 +94,10 @@ A reporting view is created:
 
 * `vw_sales_report`
 
-This view provides:
+This view combines fact and dimension tables to provide:
 
-* Customer attributes (name, gender, country)
-* Product attributes (category, subcategory)
+* Customer insights (name, gender, country)
+* Product insights (category, subcategory)
 * Sales metrics (revenue, quantity, price)
 * Derived metrics (profit, profit margin)
 
@@ -120,22 +129,37 @@ ORDER BY month;
 
 ---
 
+## ✅ Data Quality Checks
+
+Implemented validation scripts across Silver and Gold layers to ensure:
+
+* No duplicate or NULL primary keys
+* Clean and standardized data
+* Valid date ranges and business rules
+* Referential integrity between fact and dimension tables
+* Correct fact table grain `(order_number, product_key)`
+
+All checks return **PASS / FAIL indicators**, enabling reliable data validation before reporting.
+
+---
+
 ## 🧰 Tech Stack
 
 * SQL Server
 * T-SQL
-* Data Warehousing Concepts (Star Schema, ETL)
+* Data Warehousing Concepts (ETL, Star Schema)
 
 ---
 
 ## 🔥 Key Features
 
 * Layered architecture (Bronze → Silver → Gold)
-* Star schema design for analytics
-* Surrogate keys and referential integrity
-* Stored procedures for ETL automation
+* Star schema optimized for analytics
+* Surrogate key implementation
+* Automated ETL pipelines using stored procedures
 * Logging and error handling
-* Reporting view for BI tools
+* Data quality validation framework
+* Reporting view for BI consumption
 
 ---
 
@@ -143,11 +167,11 @@ ORDER BY month;
 
 * Incremental loading (MERGE / CDC)
 * Slowly Changing Dimensions (SCD Type 2)
-* ETL audit/logging tables
+* ETL audit and monitoring tables
 * Power BI dashboard integration
 
 ---
 
 ## 👤 Author
 
-Your Name
+**Noorsabha Qureshi**
