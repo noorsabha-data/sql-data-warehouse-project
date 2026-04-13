@@ -6,6 +6,19 @@ This project demonstrates the design and implementation of a modern **data wareh
 
 The final output is a **star schema** optimized for business intelligence tools such as Power BI and Tableau.
 
+
+---
+
+## 📂 Data Sources
+
+This project uses CRM and ERP datasets as input data for the data warehouse pipeline.
+
+- Source systems:
+  - CRM data (`datasets/source_crm`)
+  - ERP data (`datasets/source_erp`)
+
+Due to repository size and best practices, raw CSV files are not included in this repository.
+
 ---
 
 ## 🏗️ Architecture
